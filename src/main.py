@@ -1,16 +1,8 @@
 import json
 
-# Data to be written
-dictionary = {
-    "name": "sathiyajith",
-    "rollno": 56,
-    "cgpa": 8.6,
-    "phonenumber": "9976770500"
-}
+from src.ScriptWriter import ScriptWriter
 
-# Serializing json
-json_object = json.dumps(dictionary, indent=4)
-
-# Writing to sample.json
-with open("sample.json", "w") as outfile:
-    outfile.write(json_object)
+filename="test"
+scenename="testscene"
+scriptwriter=ScriptWriter(filename)
+scriptwriter.write_scene_name(scenename)
