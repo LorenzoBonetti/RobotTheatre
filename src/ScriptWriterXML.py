@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 
 # class to write the script in a XML file
-class ScriptWriter:
+class ScriptWriterXML:
     opera_level = 0
     scene_level = 1
 
@@ -19,18 +19,20 @@ class ScriptWriter:
     def new_scene(self, scenenumber):  # writes the scene name in the json file
         tree = ET.parse(self.filename)
         root = tree.getroot()
+        #check file
         for child in root:
             if child.attrib["number"] == scenenumber:
                 print("ERROR: your scene already exists")
                 return
+        #write in file
         new_scene = ET.SubElement(root, 'scene')
         new_scene.attrib['number'] = scenenumber
         tree.write(self.filename)
 
     def new_section(self, scenenumber, sectionnumber):
-        global child1
         tree = ET.parse(self.filename)
         root = tree.getroot()
+        #check file
         found = False
         for child in root:
             if child.attrib["number"] == scenenumber:
@@ -39,6 +41,7 @@ class ScriptWriter:
                     if child1.attrib["number"] == sectionnumber:
                         print("ERROR: your section already exists")
                         return
+        #write in file
         if found:
             sceneindex=int(scenenumber)
             new_section = ET.SubElement(root[sceneindex], 'section')
