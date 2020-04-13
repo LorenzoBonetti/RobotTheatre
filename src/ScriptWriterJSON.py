@@ -50,12 +50,39 @@ class ScriptWriterJSON:
         self.dictionary[act_name][scene_name] = sections
 
     # initializes a new section
-    def new_section(self, act_number, scene_number, section_number):
+    def new_section(self, act_number, scene_number, section_number, trigger_type,
+                    trigger,
+                    emotion):  # trigger type indicates the type trigger, trigger indicates when the section must be started
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)
         if self.dictionary[act_name][scene_name].__contains__(section_name):
             print("ERROR: section:", section_number, " already exist")
             return
+
+        self.dictionary[act_name][scene_name][section_name] = {}
         actions = {}
-        self.dictionary[act_name][scene_name][section_name] = actions
+        triggers = (trigger_type, trigger)
+        self.dictionary[act_name][scene_name][section_name]['triggers'] = triggers
+        self.dictionary[act_name][scene_name][section_name]['actions'] = actions
+        self.dictionary[act_name][scene_name][section_name]['emotion'] = emotion
+
+    def new_movement(self, act_number, scene_number, section_number, location_type, location, arts_to_move):
+        scene_name = 'scene:' + str(scene_number)
+        act_name = 'act:' + str(act_number)
+        section_name = 'section:' + str(section_number)
+        if self.dictionary[act_name][scene_name][section_name] == {}:
+            print("ERROR: section:", section_number, " does not exists")
+            return
+        self.dictionary[act_name][scene_name][section_name]['actions']['movement'] = {'loc_type': location_type,
+                                                                                      'location': location,
+                                                                                      'arts_to_move': arts_to_move}
+
+    def new_speech(self, act_number, scene_number, section_number, speech):
+        scene_name = 'scene:' + str(scene_number)
+        act_name = 'act:' + str(act_number)
+        section_name = 'section:' + str(section_number)
+        if self.dictionary[act_name][scene_name][section_name] == {}:
+            print("ERROR: section:", section_number, " does not exists")
+            return
+        self.dictionary[act_name][scene_name][section_name]['actions']['speech'] = speech
