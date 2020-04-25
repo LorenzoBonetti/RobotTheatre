@@ -1,0 +1,10 @@
+{
+  "name": "Juliet",
+  "movable_parts": [
+    "arm_dx",
+    "arm_sx",
+    "bust",
+    "body",
+    "face"
+  ]
+}
