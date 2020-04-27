@@ -8,6 +8,8 @@ class CharacterWriterJSON:
         self.filename = filename
         if os.path.isfile(filename):  # if the file already exists loads the dictionary stored in the file
             self.dictionary = json.load(open(filename))
+        else:
+            self.dictionary = {}
 
     # writes the dictionary in the json file
     def write_in_file(self):
@@ -22,3 +24,6 @@ class CharacterWriterJSON:
 
     def emotion_weights(self, emotion_weights):
         self.dictionary['emotion_weights'] = emotion_weights
+
+    def movements_emotions_table(self, table):
+        self.dictionary['movements_emotions_table'] = table

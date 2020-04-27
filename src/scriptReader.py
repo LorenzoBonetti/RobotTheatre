@@ -6,7 +6,7 @@ class ScriptReaderJSON:
     def __init__(self, filename):
         self.data = json.load(open(filename))
 
-    def checkExistance(self, act_number, scene_number, section_number):
+    def check_existance(self, act_number, scene_number, section_number):
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)
@@ -24,18 +24,26 @@ class ScriptReaderJSON:
             return False
         return True
 
-    def getTrigger(self, act_number, scene_number, section_number):
+    def get_trigger(self, act_number, scene_number, section_number):
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)
-        if self.checkExistance(act_number, scene_number, section_number):
+        if self.check_existance(act_number, scene_number, section_number):
             return self.data.get(act_name, -1).get(scene_name, -1).get(section_name, -1).get('trigger', None)
         return None
 
-    def getEmotions(self, act_number, scene_number, section_number):
+    def get_emotion(self, act_number, scene_number, section_number):
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)
-        if self.checkExistance(act_number, scene_number, section_number):
-            return self.data.get(act_name, -1).get(scene_name, -1).get(section_name, -1).get('emotions', None)
+        if self.check_existance(act_number, scene_number, section_number):
+            return self.data.get(act_name, -1).get(scene_name, -1).get(section_name, -1).get('emotion', None)
+        return None
+
+    def get_actions(self, act_number, scene_number, section_number):
+        scene_name = 'scene:' + str(scene_number)
+        act_name = 'act:' + str(act_number)
+        section_name = 'section:' + str(section_number)
+        if self.check_existance(act_number, scene_number, section_number):
+            return self.data.get(act_name, -1).get(scene_name, -1).get(section_name, -1).get('actions', None)
         return None

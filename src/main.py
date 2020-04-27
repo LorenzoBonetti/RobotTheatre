@@ -1,4 +1,7 @@
+from typing import List
+
 from src.ScriptWriterJSON import ScriptWriterJSON
+from src.characterReaderJSON import CharacterReaderJSON
 from src.character_writer import CharacterWriterJSON
 from src.scriptReader import ScriptReaderJSON
 
@@ -29,11 +32,25 @@ characterWriter = CharacterWriterJSON(character)
 characterWriter.new_character('Juliet')
 characterWriter.movable_parts(['arm_dx', 'arm_sx', 'bust', 'body', 'face'])
 characterWriter.emotion_weights({"happiness": 0.4, "sadness": 0.1, "anger": 0.2, "fear": 0.6, "curiosity": 1})
+speed_list = ['very_fast', 'fast', 'normal', 'slow', 'very_slow']
+face_emotions = ['happy', 'sad', 'angry', 'scared', 'curious']
+movements_emotions_list = [('arm_dx', speed_list), ('arm_sx', speed_list), ('bust', speed_list),
+                           ('face', face_emotions)]
+movements_emotions_table = dict(movements_emotions_list)
+characterWriter.movements_emotions_table(movements_emotions_table)
 characterWriter.write_in_file()
 
 # ScriptReader Testing
 scriptReader = ScriptReaderJSON(filenameJSON)
-if scriptReader.getTrigger(3, 2, 1) != None:
-    print(scriptReader.getTrigger(3, 2, 1))
+if scriptReader.get_trigger(3, 2, 1) is not None:
+    print(scriptReader.get_trigger(3, 2, 1))
 
-print(scriptReader.getTrigger(2, 2, 1))
+print(scriptReader.get_trigger(2, 2, 1))
+print(scriptReader.get_emotion(2, 2, 1))
+print(scriptReader.get_actions(2, 2, 1))
+
+# CharacterReader Testing
+characterReader = CharacterReaderJSON(character)
+print(characterReader.get_name())
+print(characterReader.get_emotion_weights())
+print(characterReader.get_movable_parts())
