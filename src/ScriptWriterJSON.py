@@ -19,12 +19,12 @@ class ScriptWriterJSON:
         with open(self.filename, "w") as outfile:
             json.dump(self.dictionary, outfile)
 
-    def add_new_character(self, name):
+    def add_new_character(self, name, colour, voice_range):
         for character in self.dictionary['characters']:
-            if character == name:
+            if character.get('name',0) == name:
                 print("ERROR: character:", name, " already exist")
                 return
-        self.dictionary['characters'].append(name)
+        self.dictionary['characters'].append({'name': name, 'colour': colour, 'voice_range': voice_range})
 
     # writes the name of the opera
     def new_opera(self, opera_name):
@@ -51,7 +51,7 @@ class ScriptWriterJSON:
 
     # initializes a new section
     def new_section(self, act_number, scene_number, section_number, trigger_type,
-                    trigger,
+                    trigger_data,
                     emotion):  # trigger type indicates the type trigger, trigger indicates when the section must be started
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
@@ -62,23 +62,30 @@ class ScriptWriterJSON:
 
         self.dictionary[act_name][scene_name][section_name] = {}
         actions = {}
-        triggers = (trigger_type, trigger)
-        self.dictionary[act_name][scene_name][section_name]['triggers'] = triggers
+        trigger = {'trigger_type':trigger_type, 'trigger_data':trigger_data}
+        self.dictionary[act_name][scene_name][section_name]['trigger'] = trigger
         self.dictionary[act_name][scene_name][section_name]['actions'] = actions
         self.dictionary[act_name][scene_name][section_name]['emotion'] = emotion
 
-    def new_movement(self, act_number, scene_number, section_number, location_type, location, arts_to_move):
+    def move_to(self, act_number, scene_number, section_number, location_type, location):
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)
         if self.dictionary[act_name][scene_name][section_name] == {}:
             print("ERROR: section:", section_number, " does not exists")
             return
-        self.dictionary[act_name][scene_name][section_name]['actions']['movement'] = {'loc_type': location_type,
-                                                                                      'location': location,
-                                                                                      'arts_to_move': arts_to_move}
+        self.dictionary[act_name][scene_name][section_name]['actions']['move_to'] = {'location_type':location_type, 'location':location}
 
-    def new_speech(self, act_number, scene_number, section_number, speech):
+    def move_arts(self,act_number, scene_number, section_number, arts_list):
+        scene_name = 'scene:' + str(scene_number)
+        act_name = 'act:' + str(act_number)
+        section_name = 'section:' + str(section_number)
+        if self.dictionary[act_name][scene_name][section_name] == {}:
+            print("ERROR: section:", section_number, " does not exists")
+            return
+        self.dictionary[act_name][scene_name][section_name]['actions']['move_arts'] = arts_list
+
+    def speech(self, act_number, scene_number, section_number, speech):
         scene_name = 'scene:' + str(scene_number)
         act_name = 'act:' + str(act_number)
         section_name = 'section:' + str(section_number)

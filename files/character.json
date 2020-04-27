@@ -1,10 +1,1 @@
-{
-  "name": "Juliet",
-  "movable_parts": [
-    "arm_dx",
-    "arm_sx",
-    "bust",
-    "body",
-    "face"
-  ]
-}
+{"name": "Juliet", "movable_parts": ["arm_dx", "arm_sx", "bust", "body", "face"], "emotion_weights": {"happiness": 0.4, "sadness": 0.1, "anger": 0.2, "fear": 0.6, "curiosity": 1}}

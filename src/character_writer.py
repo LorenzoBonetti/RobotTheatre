@@ -15,9 +15,10 @@ class CharacterWriterJSON:
             json.dump(self.dictionary, outfile)
 
     def new_character(self, character_name):
-        self.dictionary['name']= character_name
-    def movable_parts(self,movable_parts):
-        self.dictionary['movable_parts']=movable_parts
-    def movements_table(self):
+        self.dictionary['name'] = character_name
 
-    def character_fuzzy_weights(self):
+    def movable_parts(self, movable_parts):
+        self.dictionary['movable_parts'] = movable_parts
+
+    def emotion_weights(self, emotion_weights):
+        self.dictionary['emotion_weights'] = emotion_weights
